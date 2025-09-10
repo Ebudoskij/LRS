@@ -5,6 +5,8 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <cmath>
+#include <iomanip>
 
 using namespace std;
 
@@ -116,13 +118,13 @@ class Simulation{
       cout << "\nGeneration " << totalGenerations << " random numbers...\n";
       results.clear();
 
-      for (size_t i = 1; i< totalGenerations; ++i){
+      for (size_t i = 0; i< totalGenerations; ++i){
         Item curItem = generator();
         results[curItem.num]++;
       }
     }
 
-    map<int, int> getResults(){
+    const map<int, int>& getResults(){
       return results;
     }
 
@@ -132,8 +134,48 @@ class Simulation{
 };
 
 //printing stats
-class Statistics{
+class Statistics {
+private:
+    const vector<Item>& items;      
+    const map<int, int>& results;  
+    int totalGenerations;           
 
+public:
+    Statistics(const vector<Item>& items,
+               const map<int, int>& results,
+               int totalGenerations)
+        : items(items), results(results), totalGenerations(totalGenerations) {}
+
+    void operator()() const {
+        cout << "\n--- Statistics ---\n";
+        int totalFreq = 0;
+        for (const auto& item : items) {
+            totalFreq += item.frequency;
+        }
+
+        double maxDiff = 0.0;
+
+        cout << "Number | Expected | Actual\n";
+        for (const auto& item : items) {
+            
+            double expected = static_cast<double>(item.frequency) / totalFreq;
+            int actualCount = 0;
+            if (results.count(item.num)) {
+                actualCount = results.at(item.num);
+            }
+            double actual = static_cast<double>(actualCount) / totalGenerations;
+
+            double diff = fabs(expected - actual);
+            if (diff > maxDiff) maxDiff = diff;
+
+            cout << "   " << item.num
+                 << "   | " << fixed << setprecision(5) << expected
+                 << " | " << fixed << setprecision(5) << actual << '\n';
+        }
+
+        cout << "---------------------------------\n";
+        cout << "Max difference: " << maxDiff << '\n';
+    }
 };
 
 
@@ -157,6 +199,8 @@ int main(){
 
   cout << "Total generations: " << simulate.getTotalGenerations() << '\n';
 
+   Statistics stats(data.getItems(), simulate.getResults(), simulate.getTotalGenerations());
+    stats();
 
   return 0;
 }
