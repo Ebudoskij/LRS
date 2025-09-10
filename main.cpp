@@ -7,6 +7,7 @@
 #include <sstream>
 #include <cmath>
 #include <iomanip>
+#include <format>
 
 using namespace std;
 
@@ -168,9 +169,7 @@ public:
             double diff = fabs(expected - actual);
             if (diff > maxDiff) maxDiff = diff;
 
-            cout << "   " << item.num
-                 << "   | " << fixed << setprecision(5) << expected
-                 << " | " << fixed << setprecision(5) << actual << '\n';
+            printf("%6i | %8.5f | %.5f\n", item.num, expected, actual);
         }
 
         cout << "---------------------------------\n";
@@ -193,14 +192,8 @@ int main(){
   Simulation simulate(gen, data.getN());
   simulate();
 
-  for (const auto& [num, times] : simulate.getResults()){
-    cout << "Number " << num << " was generated " << times << " times" << '\n';
-  }
-
-  cout << "Total generations: " << simulate.getTotalGenerations() << '\n';
-
-   Statistics stats(data.getItems(), simulate.getResults(), simulate.getTotalGenerations());
-    stats();
+  Statistics stats(data.getItems(), simulate.getResults(), simulate.getTotalGenerations());
+  stats();
 
   return 0;
 }
