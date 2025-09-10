@@ -1,5 +1,9 @@
 # ignoring .exe files
 *.exe
 
-# ignoring VSCode settings
+# ignoring IDE settings
 .vscode/
+.idea/
+cmake-build-debug/
+
+CMakeLists.txt

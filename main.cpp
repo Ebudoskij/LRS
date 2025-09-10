@@ -31,7 +31,6 @@ public:
        
         file >> n;
        
-
         string line;
         getline(file, line); 
         getline(file, line);
@@ -105,25 +104,58 @@ class  Generator{
 };
 
 //generating n random numbers
-class Simulation{};
+class Simulation{
+  private:
+    Generator& generator;
+    int totalGenerations;
+    map<int, int> results;
+  public:
+    Simulation (Generator& gen, int total): generator(gen), totalGenerations(total){};
+
+    void operator ()(){
+      cout << "\nGeneration " << totalGenerations << " random numbers...\n";
+      results.clear();
+
+      for (size_t i = 1; i< totalGenerations; ++i){
+        Item curItem = generator();
+        results[curItem.num]++;
+      }
+    }
+
+    map<int, int> getResults(){
+      return results;
+    }
+
+    int getTotalGenerations(){
+      return totalGenerations;
+    }
+};
 
 //printing stats
-class Statistics{};
+class Statistics{
+
+};
 
 
 int main(){
 
   Data data("input.txt");
   cout<<"Checking printInputData"<<endl;
-  '\n';
+
   data.printInputData();
 
   cout << "\nchecking getN : " << data.getN() << endl;
 
+  Generator gen(data.getItems());
 
-  const auto& items = data.getItems();
-        cout << "\nChecking the first element: "
-             << items[0].num << " (freq = " << items[0].frequency << ")"<<endl;
+  Simulation simulate(gen, data.getN());
+  simulate();
+
+  for (const auto& [num, times] : simulate.getResults()){
+    cout << "Number " << num << " was generated " << times << " times" << '\n';
+  }
+
+  cout << "Total generations: " << simulate.getTotalGenerations() << '\n';
 
 
   return 0;
