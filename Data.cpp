@@ -3,10 +3,6 @@
 #include <sstream>
 #include <stdexcept>
 
-Data::Data(const std::string& filename) {
-    readFromFile(filename);
-}
-
 void Data::readFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
@@ -20,7 +16,6 @@ void Data::readFromFile(const std::string& filename) {
     std::string line;
     getline(file, line); 
 
-   
     if (!getline(file, line)) {
         throw std::runtime_error("Error: Missing numbers line");
     }
@@ -61,17 +56,22 @@ int Data::getN() const { return n; }
 
 const std::vector<Item>& Data::getItems() const { return items; }
 
-void Data::printInputData() const {
-    std::cout << "Input data:\n";
-    std::cout << "n = " << n << '\n';
-    std::cout << "Numbers: ";
-    for (const auto& item : items) {
-        std::cout << item.num << ' ';
+std::ostream& operator<<(std::ostream& os, const Data& data) {
+    os << "Input data:\n";
+    os << "n = " << data.n << '\n';
+    os << "Numbers: ";
+    for (const auto& item : data.items) {
+        os << item.num << ' ';
     }
-    std::cout << '\n';
-    std::cout << "Frequency: ";
-    for (const auto& item : items) {
-        std::cout << item.frequency << ' ';
+    os << '\n';
+    os << "Frequencies: ";
+    for (const auto& item : data.items) {
+        os << item.frequency << ' ';
     }
-    std::cout << '\n';
+    os << '\n';
+    return os;
+}
+
+void Data::printInputData(std::ostream& os) const {
+    os << *this;  
 }

@@ -2,38 +2,73 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <cstdio>
 
 Statistics::Statistics(const std::vector<Item>& items,
                        const std::map<int, int>& results,
                        int totalGenerations)
     : items(items), results(results), totalGenerations(totalGenerations) {}
 
-void Statistics::operator()() const {
-      std::cout << "\n--- Statistics ---\n";
-        int totalFreq = 0;
-        for (const auto& item : items) {
-            totalFreq += item.frequency;
-        }
+void Statistics::printStatistics(std::ostream& os) const {
+    os << "\n--- Statistics ---\n";
+    printTableData(os);
+    os << "---------------------------------\n";
+    os << "Max difference: " << calculateMaxDifference() << '\n';
+}
 
-        double maxDiff = 0.0;
 
-       std::cout << "Number | Expected | Actual\n";
-        for (const auto& item : items) {
-            
-            double expected = static_cast<double>(item.frequency) / totalFreq;
-            int actualCount = 0;
-            if (results.count(item.num)) {
-                actualCount = results.at(item.num);
-            }
-            double actual = static_cast<double>(actualCount) / totalGenerations;
 
-            double diff = fabs(expected - actual);
-            if (diff > maxDiff) maxDiff = diff;
-
-            printf("%6i | %8.5f | %.5f\n", item.num, expected, actual);
-        }
-
-        std::cout << "---------------------------------\n";
-        std::cout << "Max difference: " << maxDiff << '\n';
+void Statistics::printTableData(std::ostream& os) const {
+    os << "Number | Expected | Actual\n";
+   int totalFreq = calculateTotalFrequency();
     
+    for (const auto& item : items) {
+        double expected = calculateExpected(item.frequency, totalFreq);
+        double actual = calculateActual(item.num);
+        
+        if (&os == &std::cout) {
+            printf("%6i | %8.5f | %.5f\n", item.num, expected, actual);
+        } else {
+              os << std::setw(6) << item.num << " | " 
+               << std::setw(8) << std::fixed << std::setprecision(5) << expected << " | " 
+               << std::fixed << std::setprecision(5) << actual << "\n";
+        }
+    }
+}
+
+double Statistics::calculateMaxDifference() const {
+    int totalFreq = calculateTotalFrequency();
+    double maxDiff = 0.0;
+    
+    for (const auto& item : items) {
+        double expected = calculateExpected(item.frequency, totalFreq);
+        double actual = calculateActual(item.num);
+        double diff = fabs(expected - actual);
+        
+        if (diff > maxDiff) {
+            maxDiff = diff;
+        }
+    }
+    
+    return maxDiff;
+}
+
+int Statistics::calculateTotalFrequency() const {
+    int totalFreq = 0;
+    for (const auto& item : items) {
+        totalFreq += item.frequency;
+    }
+    return totalFreq;
+}
+
+double Statistics::calculateExpected(int frequency, int totalFreq) const {
+    return static_cast<double>(frequency) / totalFreq;
+}
+
+double Statistics::calculateActual(int num) const {
+    int actualCount = 0;
+    if (results.count(num)) {
+        actualCount = results.at(num);
+    }
+    return static_cast<double>(actualCount) / totalGenerations;
 }

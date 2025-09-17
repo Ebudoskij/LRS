@@ -4,7 +4,7 @@ Generator::Generator(const std::vector<Item>& items)
     : data(items), gen(std::random_device{}()) 
 {
     int total = 0;
-    for (auto& i : data) {
+    for (const auto& i : data) {
         total += i.frequency;
         prefix.push_back(total);
     }
@@ -13,7 +13,7 @@ Generator::Generator(const std::vector<Item>& items)
 }
 
 Item Generator::operator()() {
-    int rand = dist(gen);
+    auto rand = dist(gen);
     for (size_t i = 0; i < prefix.size(); ++i) {
         if (rand <= prefix[i]) {
             return data[i];

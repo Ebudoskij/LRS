@@ -6,8 +6,9 @@
 
 int main() {
     try {
-        Data data("input.txt");
-        data.printInputData();
+        Data data;
+        data.readFromFile("input.txt");
+        data.printInputData(std::cout);
 
         Generator gen(data.getItems());
 
@@ -15,7 +16,7 @@ int main() {
         simulate();
 
         Statistics stats(data.getItems(), simulate.getResults(), simulate.getTotalGenerations());
-        stats();
+        stats.printStatistics();  
     }
     catch (const std::exception& e) {
         std::cerr << "[ERROR] " << e.what() << '\n';

@@ -6,7 +6,7 @@
 
 class Simulation {
 private:
-    Generator& generator;
+    Generator generator;
     int totalGenerations;
     std::map<int, int> results;
 
@@ -19,4 +19,4 @@ public:
     int getTotalGenerations() const;
 };
 
-#endif
+#endif //SIMULATION_H

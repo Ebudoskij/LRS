@@ -13,19 +13,18 @@ struct Item {
 
 class Data {
 private:
-    int n;                       
-    std::vector<Item> items;   
+    int n{};
+    std::vector<Item> items;
 
 public:
-    explicit Data(const std::string& filename);
+    Data() = default;  
+    void readFromFile(const std::string& filename);
 
     int getN() const;
     const std::vector<Item>& getItems() const;
 
-    void printInputData() const;
-
-private:
-    void readFromFile(const std::string& filename);
+    void printInputData(std::ostream& os) const; 
+    friend std::ostream& operator<<(std::ostream& os, const Data& data);
 };
 
-#endif
+#endif // DATA_H

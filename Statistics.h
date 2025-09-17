@@ -16,7 +16,14 @@ public:
                const std::map<int, int>& results,
                int totalGenerations);
 
-    void operator()() const;
+    void printStatistics(std::ostream& os = std::cout) const;
+    void printTableData(std::ostream& os = std::cout) const;
+    double calculateMaxDifference() const;
+
+private:
+    int calculateTotalFrequency() const;
+    double calculateExpected(int frequency, int totalFreq) const;
+    double calculateActual(int num) const;
 };
 
-#endif
+#endif //STATISTICS_H
