@@ -5,7 +5,7 @@ Generator::Generator(const std::vector<Item>& items)
 {
     int total = 0;
     for (const auto& i : data) {
-        total += i.frequency;
+        total += i.freq;
         prefix.push_back(total);
     }
 

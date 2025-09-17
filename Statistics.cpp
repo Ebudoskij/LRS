@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <cmath>
 #include <cstdio>
+#include <format>
 
 Statistics::Statistics(const std::vector<Item>& items,
                        const std::map<int, int>& results,
@@ -13,26 +14,21 @@ void Statistics::printStatistics(std::ostream& os) const {
     os << "\n--- Statistics ---\n";
     printTableData(os);
     os << "---------------------------------\n";
-    os << "Max difference: " << calculateMaxDifference() << '\n';
+    os << std::format("{:.5f}\n", calculateMaxDifference());
 }
 
 
 
 void Statistics::printTableData(std::ostream& os) const {
     os << "Number | Expected | Actual\n";
-   int totalFreq = calculateTotalFrequency();
+    int totalFreq = calculateTotalFrequency();
     
     for (const auto& item : items) {
         double expected = calculateExpected(item.freq, totalFreq);
         double actual = calculateActual(item.num);
-        
-        if (&os == &std::cout) {
-            printf("%6i | %8.5f | %.5f\n", item.num, expected, actual);
-        } else {
-              os << std::setw(6) << item.num << " | " 
-               << std::setw(8) << std::fixed << std::setprecision(5) << expected << " | " 
-               << std::fixed << std::setprecision(5) << actual << "\n";
-        }
+
+        // format into a string and send to the given stream
+        os << std::format("{:6d} | {:8.5f} | {:.5f}\n", item.num, expected, actual);
     }
 }
 
