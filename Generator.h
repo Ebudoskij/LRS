@@ -15,7 +15,7 @@ private:
 public:
     explicit Generator(const std::vector<Item>& items);
 
-    Item operator()();
+    int operator()();
 };
 
-#endif
+#endif //GENERATOR_H

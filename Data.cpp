@@ -56,22 +56,22 @@ int Data::getN() const { return n; }
 
 const std::vector<Item>& Data::getItems() const { return items; }
 
-std::ostream& operator<<(std::ostream& os, const Data& data) {
-    os << "Input data:\n";
-    os << "n = " << data.n << '\n';
-    os << "Numbers: ";
-    for (const auto& item : data.items) {
-        os << item.num << ' ';
+std::ostream& Data::formatInputData(std::ostream& os) const {
+        os << "Input data:\n";
+        os << "n = " << n << '\n';
+        os << "Numbers: ";
+        for (const auto& item : items) {
+            os << item.num << ' ';
+        }
+        os << '\n';
+        os << "Frequency: ";
+        for (const auto& item : items) {
+            os << item.freq << ' ';
+        }
+        os << '\n';
+        return os;
     }
-    os << '\n';
-    os << "Frequencies: ";
-    for (const auto& item : data.items) {
-        os << item.frequency << ' ';
-    }
-    os << '\n';
-    return os;
-}
 
-void Data::printInputData(std::ostream& os) const {
-    os << *this;  
+void Data::printInputData() const {
+    formatInputData(std::cout);
 }

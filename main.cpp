@@ -8,7 +8,7 @@ int main() {
     try {
         Data data;
         data.readFromFile("input.txt");
-        data.printInputData(std::cout);
+        data.printInputData();
 
         Generator gen(data.getItems());
 

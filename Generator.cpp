@@ -12,12 +12,9 @@ Generator::Generator(const std::vector<Item>& items)
     dist = std::uniform_int_distribution<int>(1, total);
 }
 
-Item Generator::operator()() {
+int Generator::operator()() {
     auto rand = dist(gen);
-    for (size_t i = 0; i < prefix.size(); ++i) {
-        if (rand <= prefix[i]) {
-            return data[i];
-        }
-    }
-    return data.back(); 
+    auto it = std::lower_bound(prefix.begin(), prefix.end(), rand);
+    size_t idx = std::distance(prefix.begin(), it);
+    return data[idx].num; 
 }

@@ -7,8 +7,8 @@
 
 struct Item {
     int num;
-    int frequency;
-    Item(int n, int f) : num(n), frequency(f) {}
+    int freq;
+    Item(int n, int f) : num(n), freq(f) {}
 };
 
 class Data {
@@ -22,8 +22,8 @@ public:
 
     int getN() const;
     const std::vector<Item>& getItems() const;
-
-    void printInputData(std::ostream& os) const; 
+    std::ostream& formatInputData(std::ostream& os) const;
+    void printInputData() const; 
     friend std::ostream& operator<<(std::ostream& os, const Data& data);
 };
 

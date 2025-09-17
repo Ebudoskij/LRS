@@ -23,7 +23,7 @@ void Statistics::printTableData(std::ostream& os) const {
    int totalFreq = calculateTotalFrequency();
     
     for (const auto& item : items) {
-        double expected = calculateExpected(item.frequency, totalFreq);
+        double expected = calculateExpected(item.freq, totalFreq);
         double actual = calculateActual(item.num);
         
         if (&os == &std::cout) {
@@ -41,7 +41,7 @@ double Statistics::calculateMaxDifference() const {
     double maxDiff = 0.0;
     
     for (const auto& item : items) {
-        double expected = calculateExpected(item.frequency, totalFreq);
+        double expected = calculateExpected(item.freq, totalFreq);
         double actual = calculateActual(item.num);
         double diff = fabs(expected - actual);
         
@@ -56,13 +56,13 @@ double Statistics::calculateMaxDifference() const {
 int Statistics::calculateTotalFrequency() const {
     int totalFreq = 0;
     for (const auto& item : items) {
-        totalFreq += item.frequency;
+        totalFreq += item.freq;
     }
     return totalFreq;
 }
 
-double Statistics::calculateExpected(int frequency, int totalFreq) const {
-    return static_cast<double>(frequency) / totalFreq;
+double Statistics::calculateExpected(int freq, int totalFreq) const {
+    return static_cast<double>(freq) / totalFreq;
 }
 
 double Statistics::calculateActual(int num) const {
