@@ -10,7 +10,7 @@ int main() {
         data.readFromFile("input.txt");
         data.printInputData();
 
-        Generator gen(data.getItems());
+        auto gen = std::make_shared<Generator>(data.getItems());
 
         Simulation simulate(gen, data.getN());
         simulate();

@@ -2,16 +2,17 @@
 #define SIMULATION_H
 
 #include <map>
+#include <memory>
 #include "Generator.h"
 
 class Simulation {
 private:
-    Generator generator;
+    std::shared_ptr<Generator> generator;
     int totalGenerations;
     std::map<int, int> results;
 
 public:
-    Simulation(Generator& gen, int total);
+    Simulation(std::shared_ptr<Generator> gen, int total);
 
     void operator()();
 
