@@ -2,6 +2,7 @@
 #define STATISTICS_H
 
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "Data.h"

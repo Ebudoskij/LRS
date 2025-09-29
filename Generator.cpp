@@ -1,5 +1,7 @@
 #include "Generator.h"
 
+#include <algorithm>
+
 Generator::Generator(const std::vector<Item>& items)
     : data(items), gen(std::random_device{}()) {
   // TODO(@Ebudoskij): use as much STL as possible

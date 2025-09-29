@@ -1,5 +1,6 @@
 #include "Data.h"
 
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -54,7 +55,7 @@ void Data::readFromFile(const std::string& filename) {
                          "Error: Frequency must be positive for number " +
                          std::to_string(number));
                    }
-                   return std::make_pair(number, frequency);
+                   return Item{number, frequency};
                  });
 }
 
