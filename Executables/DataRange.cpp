@@ -1,23 +1,25 @@
 #include "../Generator.h"
+#include "../Accumulate.h"
 
 #include <iostream>
 #include <chrono>
-
-using namespace std;
+#include <algorithm>
+#include <format>
 
 int main(){
-  Generator gen(10000000);
-  vector<int> data = gen();
+  Generator gen;
+  vector<int> volumes = {100000, 1000000, 10000000, 100000000};
+  for (auto volume : volumes){
+    std::vector<int> data = gen.generate(volume);
 
-  auto start = chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
 
-  auto min = min_element(data.begin(), data.end());
+    auto min = std::min_element(data.begin(), data.end());
 
-  auto end = chrono::high_resolution_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
 
-  auto duration_ms = chrono::duration_cast<chrono::milliseconds> (end-start);
+    auto duration_ms = std::chrono::duration_cast<std::chrono::microseconds> (end-start);
 
-  cout << *min << endl;
-
-  cout << duration_ms;
+    std::cout << std::format("Data set: {}, Algorithm: {}, Time: {} micros , Result: {}\n", volume, "standard", duration_ms.count(), *min);
+  }
 }

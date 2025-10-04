@@ -1,17 +1,17 @@
 #pragma once
 
+#include <vector>
 #include <random>
 
 using namespace std;
 
 class Generator {
   private:
-    long vol;
     mt19937 gen;
     uniform_int_distribution<int> dist;
   public:
-    explicit Generator(long userVol): vol(userVol){};
+    explicit Generator() {};
 
-    vector<int> operator()();
+    vector<int> generate(long vol);
 
 };
