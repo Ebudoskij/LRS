@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "random": "cpp",
+    "xutility": "cpp",
+    "algorithm": "cpp",
+    "memory": "cpp",
+    "xmemory": "cpp"
+  }
+}
