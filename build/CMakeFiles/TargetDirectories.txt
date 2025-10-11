@@ -1,7 +1,0 @@
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/Experiment1.dir
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/Experiment2.dir
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/Experiment3_O0.dir
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/Experiment3_O2.dir
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/Experiment3_O3.dir
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/ALL_BUILD.dir
-C:/Learning/c++/LRs_2year/LR2/build/CMakeFiles/ZERO_CHECK.dir
